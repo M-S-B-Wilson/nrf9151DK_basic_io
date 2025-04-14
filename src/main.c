@@ -9,10 +9,10 @@
 #define LED2_NODE DT_ALIAS(led2)
 #define LED3_NODE DT_ALIAS(led3)
 
-#define BUTTON0_NODE DT_ALIAS(sw0)
-#define BUTTON1_NODE DT_ALIAS(sw1)
-#define BUTTON2_NODE DT_ALIAS(sw2)
-#define BUTTON3_NODE DT_ALIAS(sw3)
+#define BUTTON0_NODE DT_ALIAS(button0)
+#define BUTTON1_NODE DT_ALIAS(button1)
+#define BUTTON2_NODE DT_ALIAS(button2)
+#define BUTTON3_NODE DT_ALIAS(button3)
 
 // Check if the LED nodes are defined
 
@@ -67,10 +67,11 @@ int main(void)
         }
 
         gpio_pin_configure(leds[i].dev, leds[i].pin, GPIO_OUTPUT_ACTIVE | leds[i].flags);
+        gpio_pin_configure(buttons[i].dev, buttons[i].pin, GPIO_INPUT | buttons[i].flags);
     }
 
     while (1) {
-        printk("\nLED ");
+/*        printk("\nLEDs ");
         for (int i = 0; i < 4; i++) {
             // Turn all off first
             for (int j = 0; j < 4; j++) {
@@ -78,7 +79,7 @@ int main(void)
             }
 
             // Turn one on
-            printk(" %d , ", i);
+            printk(" %d ", i);
             gpio_pin_set(leds[i].dev, leds[i].pin, 1);
 
             //k_sleep(K_SECONDS(1));
@@ -86,9 +87,17 @@ int main(void)
 //            printk("LED %d off\n", i);
             gpio_pin_set(leds[i].dev, leds[i].pin, 0);
 
-            // if(gpio_pin_get(buttons[i].dev, buttons[i].pin) == 0) printk("Button %d pressed\n", i); 
-            printk("%d ", (gpio_pin_get_raw(buttons[i].dev, buttons[i].pin)));
         }    
+*/            
+        for (int i = 0; i < 4; i++) {
+            if (gpio_pin_get(buttons[i].dev, buttons[i].pin)) {
+                printk("Button %d pressed\n", i);
+                gpio_pin_set(leds[i].dev, leds[i].pin, 1);
+            } else {
+                gpio_pin_set(leds[i].dev, leds[i].pin, 0);
+            }
+        }    
+
     }
     return 0;
 }
