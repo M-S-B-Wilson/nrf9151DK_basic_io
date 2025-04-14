@@ -1,0 +1,8 @@
+# editors
+*.swp
+*~
+
+# build
+/build*/
+#Doxygen HTML
+/html*/

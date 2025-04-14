@@ -1,0 +1,60 @@
+&pinctrl {
+    uart1_default: uart1_default {
+        group1 {
+            psels = <NRF_PSEL(UART_TX, 0, 27)>,
+                    <NRF_PSEL(UART_RX, 0, 26)>;
+        };
+    };
+
+    uart2_default: uart2_default {
+        group1 {
+            psels = <NRF_PSEL(UART_TX, 0, 29)>,
+                    <NRF_PSEL(UART_RX, 0, 28)>;
+        };
+    };
+};
+
+&uart1 {
+    status = "okay";
+    current-speed = <115200>;
+    pinctrl-0 = <&uart1_default>;
+    pinctrl-names = "default";
+};
+
+&uart2 {
+    status = "okay";
+    current-speed = <115200>;
+    pinctrl-0 = <&uart2_default>;
+    pinctrl-names = "default";
+};
+
+&gpio0 {
+    leds {
+        compatible = "gpio-leds";
+        led_ch1: led_ch1 {
+            gpios = <&gpio0 2 GPIO_ACTIVE_HIGH>;
+            label = "LED CH1";
+        };
+        led_ch2: led_ch2 {
+            gpios = <&gpio0 3 GPIO_ACTIVE_HIGH>;
+            label = "LED CH2";
+        };
+        led_ch3: led_ch3 {
+            gpios = <&gpio0 4 GPIO_ACTIVE_HIGH>;
+            label = "LED CH3";
+        };
+        led_ch4: led_ch4 {
+            gpios = <&gpio0 5 GPIO_ACTIVE_HIGH>;
+            label = "LED CH4";
+        };
+    };
+};
+
+/ {
+    aliases {
+        led0 = &led_ch1;
+        led1 = &led_ch2;
+        led2 = &led_ch3;
+        led3 = &led_ch4;
+    };
+};
