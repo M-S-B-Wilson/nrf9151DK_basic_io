@@ -7,14 +7,12 @@
 #define LED0_NODE DT_ALIAS(led0)
 #define LED1_NODE DT_ALIAS(led1)
 #define LED2_NODE DT_ALIAS(led2)
-#define LED3_NODE DT_ALIAS(led3)
+//#define LED3_NODE DT_ALIAS(led3)
 
-#define BUTTON0_NODE DT_ALIAS(button0)
-#define BUTTON1_NODE DT_ALIAS(button1)
-#define BUTTON2_NODE DT_ALIAS(button2)
-#define BUTTON3_NODE DT_ALIAS(button3)
-
-// Check if the LED nodes are defined
+#define BUTTON0_NODE DT_ALIAS(sw0)
+#define BUTTON1_NODE DT_ALIAS(sw1)
+#define BUTTON2_NODE DT_ALIAS(sw2)
+//#define BUTTON3_NODE DT_ALIAS(sw3)
 
 
 // Macro to simplify LED config structure
@@ -46,12 +44,12 @@ struct button {
 
 int main(void)
 {
-    printk("nrf9151dk_basic_io: Hello, World!\n");
-    struct button buttons[4] = {
+    printk("nrf9151dk_basic_io test: LEDs, Buttons, UARTS 2 & 3 v0\n");
+    struct button buttons[3] = {
         DEFINE_BUTTON(BUTTON0_NODE),
         DEFINE_BUTTON(BUTTON1_NODE),
         DEFINE_BUTTON(BUTTON2_NODE),
-        DEFINE_BUTTON(BUTTON3_NODE),
+//        DEFINE_BUTTON(BUTTON3_NODE),
     };  
     struct led leds[4] = {
         DEFINE_LED(LED0_NODE),
@@ -60,7 +58,7 @@ int main(void)
         DEFINE_LED(LED3_NODE),
     };
 
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < 3; i++) {
         if (!device_is_ready(leds[i].dev)) {
             printk("LED %d device not ready\n", i);
             return 0;
@@ -89,7 +87,7 @@ int main(void)
 
         }    
 */            
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 3; i++) {
             if (gpio_pin_get(buttons[i].dev, buttons[i].pin)) {
                 printk("Button %d pressed\n", i);
                 gpio_pin_set(leds[i].dev, leds[i].pin, 1);
@@ -97,6 +95,7 @@ int main(void)
                 gpio_pin_set(leds[i].dev, leds[i].pin, 0);
             }
         }    
+        k_sleep(K_MSEC(400));
 
     }
     return 0;
