@@ -115,8 +115,6 @@ struct txen {
     gpio_flags_t flags;
 };
 
-//struct txen txen_1 = DEFINE_TXEN(RS4851_NODE); 
-//struct txen txen_2 = DEFINE_TXEN(RS4852_NODE);
 
 int main(void)
 {
