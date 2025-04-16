@@ -1,33 +1,9 @@
-/*
-/ {
 
-
-    /*
-// The following aliases are not needed in the overlay file, but are here to show how to use them. 
-// Aliases sw0 to sw3 already defined in the zephyr.dts file.
-
-	aliases {
-		button0 = &button0;
-		button1 = &button1;
-        button2 = &button2;
-        button3 = &button3;
-
-	};
-    
-};
-*/
-
-&uart2 {
-	status = "okay";
-	current-speed = <115200>;
-	pinctrl-0 = <&uart2_default>;
-	pinctrl-names = "default";
-};
 
 &pinctrl {
 	uart2_default: uart2_default {
 		group1 {
-			psels = <NRF_PSEL(UART_TX, 0, 22)>, <NRF_PSEL(UART_RTS, 0, 19)>;
+			psels = <NRF_PSEL(UART_TX, 0, 22)>;
 		};
 
 		group2 {
@@ -38,7 +14,7 @@
 
 	uart3_default: uart3_default {
 		group1 {
-			psels = <NRF_PSEL(UART_TX, 0, 29)>, <NRF_PSEL(UART_RTS, 0, 23)>;
+			psels = <NRF_PSEL(UART_TX, 0, 29)>;
 		};
 
 		group2 {
@@ -48,6 +24,13 @@
 	};
 };
 
+&uart2 {
+	status = "okay";
+	current-speed = <115200>;
+	pinctrl-0 = <&uart2_default>;
+	pinctrl-names = "default";
+};
+
 &uart3 {
 	status = "okay";
 	current-speed = <115200>;
@@ -55,3 +38,16 @@
 	pinctrl-names = "default";
 };
 
+
+
+&button3 {
+	status = "disabled"; // Disable the button3 node instead of deleting its gpios property
+};
+
+
+/ {
+	zephyr,user {
+		RS485_tx_enable_1-gpios = <&gpio0 19 0>;
+		RS485_tx_enable_2-gpios = <&gpio0 23 0>;
+	};
+};
