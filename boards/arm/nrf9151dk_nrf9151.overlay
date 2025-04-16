@@ -51,3 +51,7 @@
 		RS485_tx_enable_2-gpios = <&gpio0 23 0>;
 	};
 };
+
+&i2c2 {
+	zephyr,deferred-init;
+};

@@ -8,7 +8,7 @@
 
 #define CONFIG_MODBUS_BUFFER_SIZE 64
 LOG_MODULE_REGISTER(uart_async);
-#define UART_DEVICE_NODE DT_NODELABEL(uart2) // Use UART2
+//#define UART_DEVICE_NODE DT_NODELABEL(uart2) // Use UART2
 const struct device *uart_dev;
 
 static uint8_t tx_buffer[] = "Hello, UART_ASYNC_API with DMA!";
@@ -134,7 +134,8 @@ int main(void)
 
     rs485_1 = DEVICE_DT_GET(DT_NODELABEL(uart2));
     rs485_2 = DEVICE_DT_GET(DT_NODELABEL(uart3));
-
+    txen_1 = DEVICE_DT_GET(DT_NODELABEL(txen_1));
+    txen_2 = DEVICE_DT_GET(DT_NODELABEL(txen_2));
     
     // Configure RS485 TX enable pins
     gpio_pin_configure(txen_1, txen_1.pin, GPIO_OUTPUT_ACTIVE);
