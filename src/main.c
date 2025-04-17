@@ -31,14 +31,14 @@ static uint8_t rx_buffer[64]; // Buffer for receiving data
 #define RS4852_NODE DT_NODELABEL(RS485_tx_enable_2)
 
 // Extract GPIO device, pin, and flags for RS485-1 TX enable
-#define RS4851_GPIO_DEV DEVICE_DT_GET(DT_GPIO_CTLR(RS4851_NODE, gpios))
-#define RS4851_GPIO_PIN DT_GPIO_PIN(RS4851_NODE, gpios)
-#define RS4851_GPIO_FLAGS DT_GPIO_FLAGS(RS4851_NODE, gpios)
+#define TXEN1_NODE DT_NODELABEL(rs485_tx_enable_1)
+#define TXEN1_PIN DT_GPIO_PIN(TXEN1_NODE, gpios)
+#define TXEN1_FLAGS DT_GPIO_FLAGS(TXEN1_NODE, gpios)
 
 // Extract GPIO device, pin, and flags for RS485-2 TX enable
-#define RS4852_GPIO_DEV DEVICE_DT_GET(DT_GPIO_CTLR(RS4852_NODE, gpios))
-#define RS4852_GPIO_PIN DT_GPIO_PIN(RS4852_NODE, gpios)
-#define RS4852_GPIO_FLAGS DT_GPIO_FLAGS(RS4852_NODE, gpios)
+#define TXEN2_NODE DT_NODELABEL(rs485_tx_enable_2)
+#define TXEN2_PIN DT_GPIO_PIN(TXEN2_NODE, gpios)
+#define TXEN2_FLAGS DT_GPIO_FLAGS(TXEN2_NODE, gpios)
 
 // --- UART Devices ---
 const struct device *rs485_1; // RS485 port 1
@@ -134,15 +134,14 @@ int main(void)
 
     rs485_1 = DEVICE_DT_GET(DT_NODELABEL(uart2));
     rs485_2 = DEVICE_DT_GET(DT_NODELABEL(uart3));
-    txen_1 = DEVICE_DT_GET(DT_NODELABEL(txen_1));
-    txen_2 = DEVICE_DT_GET(DT_NODELABEL(txen_2));
     
     // Configure RS485 TX enable pins
-    gpio_pin_configure(txen_1, txen_1.pin, GPIO_OUTPUT_ACTIVE);
-    gpio_pin_set(txen_1, txen_1.pin, 0); // Set to RX mode
+/*    gpio_pin_configure_dt(&txen_1, GPIO_OUTPUT_ACTIVE);
+    gpio_pin_set_dt(&txen_1,  0); // Set to RX mode
 
-    gpio_pin_configure(txen_2, txen_2.pin, GPIO_OUTPUT_ACTIVE);
-    gpio_pin_set(txen_2, txen_2.pin, 0); // Set to RX mode
+    gpio_pin_configure_dt(&txen_2, GPIO_OUTPUT_ACTIVE);
+    gpio_pin_set_dt(&txen_2,  0); // Set to RX mode
+*/
 
     for (int i = 0; i < 3; i++) {
         if (!device_is_ready(leds[i].dev)) {
